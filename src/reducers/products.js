@@ -32,14 +32,6 @@ let defaultState = [
 		summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt quas, magnam perferendis ',
 		price: 8,
 		canBuy: false
-	},
-	{
-		id: 'target-leap-frog',
-		name: 'target leap frog',
-		image: 'target-leap-frog.jpg',
-		summary: 'AAA Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt quas, magnam perferendis ',
-		price: 8,
-		canBuy: false
 	}
 ];
 

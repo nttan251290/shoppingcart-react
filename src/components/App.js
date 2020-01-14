@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Title from './Title'
 import Cart from './Cart'
 
-import ProductList from './ProductList'
+import ProductsContainer from './../containers/ProductsContainer'
 
 class App extends Component {
 	render() {
@@ -10,7 +10,7 @@ class App extends Component {
 			<div className="container">
 				<Title />
 				<div className="row">
-					<ProductList />
+					<ProductsContainer />
 					<Cart />
 				</div>
 			</div>

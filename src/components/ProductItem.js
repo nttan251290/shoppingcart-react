@@ -29,10 +29,8 @@ class ProductItem extends Component {
 	handleClick = (product) => {
 		let quantity = parseInt(this.state.value)
 		if (!Validate.checkQuantity(quantity)) {
-			console.log('Validate failed')
 			this.props.changeNotify(configs.NOTI_GREATER_THAN_ONE)
 		} else {
-			console.log(quantity + ' ' + product.id)
 			this.props.buyProduct(product, quantity)
 			this.props.changeNotify(configs.NOTI_ACT_ADD)
 		}

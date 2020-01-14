@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { sumBy } from 'lodash'
+
 import Notify from './Notify'
 import CartItem from './CartItem'
+import Helpers from './../libs/helpers'
 
 class Cart extends Component {
 	render() {
 		let { items } = this.props;
-		console.log('items Cart.js: ', items)
 
 		return (
-			<div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+			<div className="col-xs-12 col-sm-12 col-md-7 col-lg-7">
 				<div className="panel panel-danger">
 					<div className="panel-heading">
 						<h1 className="panel-title">Your Cart</h1>
@@ -42,7 +44,7 @@ class Cart extends Component {
 
 		if (items && items.length > 0) {
 			xhtml = items.map((item, index) => {
-				return <CartItem item={item} index={index} key={index} />
+				return <CartItem cartItem={item} index={index} key={index + ' ' + item.quantity} />
 			})
 		}
 
@@ -53,9 +55,14 @@ class Cart extends Component {
 		let xhtml = <tr><th colSpan={6}>Empty product in your cart</th></tr>
 
 		if (items && items.length > 0) {
+			let totalQuantity = sumBy(items, 'quantity')
+			let totalPrice = sumBy(items, (item) => {
+				return item.product.price * item.quantity
+			})
+
 			xhtml = <tr>
-				<td colSpan={4}>There are <b>5</b> items in your shopping cart.</td>
-				<td colSpan={2} className="total-price text-left">12 USD</td>
+				<td colSpan={4}>There are <b>{totalQuantity}</b> items in your shopping cart.</td>
+				<td colSpan={2} className="total-price text-left">{Helpers.toCurrency(totalPrice, '$', 'left')}</td>
 			</tr>
 		}
 		return <tfoot id="my-cart-footer">{xhtml}</tfoot>
@@ -63,7 +70,6 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log('state cart.js : ', state)
 	return {
 		items: state.carts
 	}
