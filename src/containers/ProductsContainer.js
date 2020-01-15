@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as config from './../constants/Config';
 import ProductList from '../components/ProductList'
 import ProductItem from '../components/ProductItem'
+import { actChangeNotify, actBuyProduct } from './../actions/index'
 
 class ProductsContainer extends Component {
   render() {
@@ -23,7 +24,12 @@ class ProductsContainer extends Component {
 		if (products.length > 0) {
 			xhtml = products.map((product, index) => {
 				return (
-					<ProductItem product={product} key={index} index={index} />
+          <ProductItem
+            onBuyProduct={this.props.buyProduct}
+            onChangeNotify={this.props.changeNotify}
+            product={product} 
+            key={index} 
+            index={index} />
 				)
 			})
 		}
@@ -40,7 +46,10 @@ ProductsContainer.propTypes = {
     summary: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     canBuy: PropTypes.bool.isRequired,
-  })).isRequired
+  })).isRequired,
+  
+  changeNotify: PropTypes.func.isRequired,
+  buyProduct: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -49,4 +58,16 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, null)(ProductsContainer)
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		buyProduct: (product, quantity) => {
+			dispatch(actBuyProduct(product, quantity))
+		},
+
+		changeNotify: (value) => {
+			dispatch(actChangeNotify(value))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer)
